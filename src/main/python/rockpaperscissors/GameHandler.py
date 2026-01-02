@@ -4,13 +4,22 @@ class Hands:
     SCISSORS = "scissors"
 
 
-def get_winner(player1_choice, player2_choice):
-    if player1_choice == player2_choice:
-        return "It's a tie!"
-    elif ((player1_choice == Hands.ROCK and player2_choice == Hands.SCISSORS) or
-          (player1_choice == Hands.PAPER and player2_choice == Hands.ROCK) or
-          (player1_choice == Hands.SCISSORS and player2_choice == Hands.PAPER)):
-        return "Player 1 wins!"
-    else:
-        return "Player 2 wins!"
+class GameHandler:
+    def __init__(self):
+        self._winning_rules = self._build_winning_rules()
 
+    def _build_winning_rules(self):
+        return {
+            Hands.ROCK: Hands.SCISSORS,
+            Hands.PAPER: Hands.ROCK,
+            Hands.SCISSORS: Hands.PAPER
+        }
+
+    def get_winner(self, player1_choice, player2_choice):
+        if player1_choice == player2_choice:
+            return "It's a tie!"
+        
+        if self._winning_rules[player1_choice] == player2_choice:
+            return "Player 1 wins!"
+        
+        return "Player 2 wins!"
